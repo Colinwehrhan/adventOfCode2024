@@ -14,9 +14,11 @@ print(df_t)
 
 # Loop through columns and drop any that are increasing by more than 3 and check if they are increasing/decreasing
 for column in df_t.columns:
-    diffs = df_t[column].diff().iloc[1:]
-    
-    if not (diffs.abs() <= 3).all() or not (df_t[column].is_monotonic_increasing or df_t[column].is_monotonic_decreasing) or (diffs.abs() ==0).any():
+    col_data = df_t[column].dropna()
+    diffs = col_data.diff().iloc[1:]
+
+
+    if not (diffs.abs() <= 3).all() or not (col_data.is_monotonic_increasing or col_data.is_monotonic_decreasing) or (diffs ==0).any():
         df_t = df_t.drop(column, axis=1)
 
 
