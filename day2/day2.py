@@ -1,7 +1,7 @@
 import pandas as pd
 
 file_path = "C:\\Users\\ColinWehrhan\\Documents\\adventOfCode2024\\day2\\input.txt"
-
+#file_path = "C:\\Users\\ColinWehrhan\\Documents\\adventOfCode2024\\day2\\test.txt"
 with open(file_path, 'r') as file:
     data = [list(map(int, line.split())) for line in file]
 
@@ -16,7 +16,10 @@ print(df_t)
 for column in df_t.columns:
     diffs = df_t[column].diff().iloc[1:]
     
-    if not (diffs.abs() <= 3).all() or not (diffs.is_monotonic_increasing or diffs.is_monotonic_decreasing):
+    if not (diffs.abs() <= 3).all() or not (df_t[column].is_monotonic_increasing or df_t[column].is_monotonic_decreasing) or (diffs.abs() ==0).any():
         df_t = df_t.drop(column, axis=1)
 
+
 print(df_t)
+row, col = df_t.shape
+print("Safe rows:", col)
